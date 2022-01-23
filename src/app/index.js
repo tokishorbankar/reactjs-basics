@@ -1,28 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 import { render } from "react-dom";
-import { Header } from "./components/Header";
+import { Router, Route, browserHistory, IndexRoute } from "react-router";
+
+import { Root } from "./components/Root";
 import { Home } from "./components/Home";
+import { User } from "./components/User";
 
-class App extends Component {
+class App extends React.Component {
   render() {
-    const users = [
-      { name: "John", hobbies: ["sports"], email: "john@gmail.com" },
-      { name: "Deere", hobbies: ["sports", "Games"], email: "deere@gmail.com" },
-    ];
-
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-10 col-xs-offset-1">
-            <Header />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-10 col-xs-offset-1">
-            <Home users={users} />
-          </div>
-        </div>
-      </div>
+      <Router history={browserHistory}>
+        <Route path={"/"} component={Root}>
+          <IndexRoute component={Home} />
+          <Route path={"user/:id"} component={User} />
+          <Route path={"home"} component={Home} />
+        </Route>
+        <Route path={"home-single"} component={Home} />
+      </Router>
     );
   }
 }
